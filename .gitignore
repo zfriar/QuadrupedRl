@@ -1,3 +1,39 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.Python
+env/
+venv/
+.venv/
+
+# Poetry
+poetry.lock
+
+# Byte-compiled / optimized / DLL files
+*.pyc
+
+# Editor directories and files
+.vscode/
+.idea/
+
+# pytest
+.pytest_cache/
+
+# coverage
+htmlcov/
+coverage.xml
+
+# mypy
+.mypy_cache/
+
+# pre-commit
+.cache/
+
+# distribution/build
+dist/
+build/
+*.egg-info/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
