@@ -1,5 +1,5 @@
 import numpy
-import pybullet  # type: ignore
+import pybullet
 
 
 def test_env_reset_returns_correct_shape(ant_environment):

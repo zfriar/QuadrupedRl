@@ -17,7 +17,9 @@ repos:
       - id: isort
 
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.10
+    # Use a valid mypy tag that matches the installed mypy version. Adjust if you
+    # upgrade mypy in pyproject.toml.
+    rev: v1.19.0
     hooks:
       - id: mypy
         args: [--ignore-missing-imports]
