@@ -1,3 +1,5 @@
+"""Environment definition for a quadruped robot (Ant) using PyBullet and OpenAI Gymnasium."""
+
 import os
 
 import gymnasium
