@@ -12,7 +12,9 @@ class AntEnv(gymnasium.Env):
     def __init__(self, gui=False):
         # Determin if we want to connect directly or via gui
         if gui:
-            self.physics_client = pybullet.connect(pybullet.GUI)
+            # GUI mode requires a display; typically not available in CI / headless
+            # environments, so exclude this line from coverage reporting.
+            self.physics_client = pybullet.connect(pybullet.GUI)  # pragma: no cover
         else:
             self.physics_client = pybullet.connect(pybullet.DIRECT)
 
