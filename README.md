@@ -145,7 +145,7 @@ Minimal examples in tests demonstrate correct shapes, reward calculation, curric
 
 ---
 
-## Suggested Learning Path
+## Theoretical Foundations
 
 1. **Reinforcement Learning Basics** – policy gradients, actor-critic, PPO.
 2. **Simulation and Robotics** – PyBullet, URDFs, kinematics.
