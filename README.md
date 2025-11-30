@@ -1,5 +1,8 @@
 # Quadruped Reinforcement Learning with PyBullet
 
+![CI](https://github.com/zfriar/QuadrupedRl/actions/workflows/ci.yml/badge.svg)
+[![coverage](https://img.shields.io/endpoint?url=https://raw.githubusercontent.com/zfriar/QuadrupedRl/gh-pages/badges/coverage.json)](https://github.com/zfriar/QuadrupedRl)
+
 This repository provides a starting point for reinforcement learning with quadruped robots in simulation. It uses PyBullet and a custom Ant environment as a testbed, with the goal of exploring RL for locomotion and later transferring to real hardware.
 
 ---
@@ -25,6 +28,31 @@ pip install poetry
 poetry install
 poetry shell
 ```
+
+## Quickstart (dev)
+
+Run the quick developer setup and basic checks:
+
+```bash
+# install dependencies (including dev)
+poetry install
+
+# install pre-commit hooks (once)
+make precommit-install
+
+# run the pre-commit hooks across the repo (verify)
+make precommit-run
+
+# run basic checks (format, lint, typecheck)
+make code-checks
+
+# run tests
+make test
+
+# run coverage (prints missing lines)
+make coverage
+```
+
 
 ---
 
