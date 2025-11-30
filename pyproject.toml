@@ -1,0 +1,35 @@
+[tool.poetry]
+name = "quadruped-rl"
+version = "0.1.0"
+description = "Learning repository for quadruped locomotion reinforcement learning using PyBullet and PPO."
+authors = ["Zach Friar <zach.friar@gmail.com>"]
+license = "MIT"
+readme = "README.md"
+packages = [
+    { include = "envs" },
+    { include = "training" },
+    { include = "scripts" }
+]
+
+[tool.poetry.dependencies]
+python = ">=3.10,<3.13"
+pybullet = "^3.2.6"
+gymnasium = "^0.29.1"
+stable-baselines3 = "^2.3.0"
+pyyaml = "^6.0.1"
+numpy = "^1.26"
+matplotlib = "^3.8"
+scipy = "^1.11"
+
+[tool.poetry.group.dev.dependencies]
+black = "^24.0"
+isort = "^5.12"
+pytest = "^8.0"
+ruff = "^0.6.2"
+mypy = "^1.10"
+pre-commit = "^3.5"
+pytest-cov = "^7.0.0"
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
