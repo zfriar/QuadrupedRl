@@ -84,7 +84,8 @@ def test_fallback_line_rate_on_nested_element(tmp_path):
     mod = importlib.import_module("scripts.make_coverage_badge")
     mod.main()
     payload = json.loads((badges_dir / "coverage.json").read_text())
-    assert payload["color"] == "red"  # 80% rounds to 80 -> red per thresholds
+    # 80% => falls into the yellow branch (>=80 and <90)
+    assert payload["color"] == "yellow"
 
     _ensure_removed(badges_dir)
     _ensure_removed(target)
