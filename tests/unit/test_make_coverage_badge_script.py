@@ -114,3 +114,27 @@ def test_malformed_line_rate_falls_back_to_zero(tmp_path):
 
     _ensure_removed(badges_dir)
     _ensure_removed(target)
+
+
+def test_script_prints_written_message(tmp_path, capsys):
+    """Ensure the script prints a confirmation message when writing the badge."""
+    repo_root = pathlib.Path.cwd()
+    target = repo_root / "coverage.xml"
+    badges_dir = repo_root / "badges"
+
+    _ensure_removed(target)
+    _ensure_removed(badges_dir)
+
+    target.write_text("<?xml version='1.0'?><coverage line-rate='0.99'></coverage>")
+
+    import importlib
+
+    mod = importlib.import_module("scripts.make_coverage_badge")
+    mod.main()
+
+    captured = capsys.readouterr()
+    assert "Wrote" in captured.out
+    assert (badges_dir / "coverage.json").exists()
+
+    _ensure_removed(badges_dir)
+    _ensure_removed(target)
