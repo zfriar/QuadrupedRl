@@ -30,6 +30,23 @@ mypy = "^1.10"
 pre-commit = "^3.5"
 pytest-cov = "^7.0.0"
 
+[tool.coverage.run]
+branch = true
+source = ["envs", "training", "scripts", "configs"]
+
+[tool.coverage.report]
+omit = [
+    "tests/*",
+    "tests/**/*",
+    "*/__init__.py",
+    "assets/*",
+    ".github/**",
+    ".venv/**",
+]
+
+[tool.coverage.html]
+directory = "htmlcov"
+
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"

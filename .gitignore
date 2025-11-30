@@ -180,6 +180,9 @@ ENV/
 env.bak/
 venv.bak/
 
+# Generated badges (published to gh-pages branch only)
+badges/
+
 # Spyder project settings
 .spyderproject
 .spyproject
