@@ -75,12 +75,17 @@ train:  ## Train PPO agent using configs/ppo_ant.yaml
 visualize:  ## Visualize a trained policy
 	poetry run python scripts/visualize_policy.py --model checkpoints/best_model.zip
 
+
 test:  ## Run tests
 	poetry run pytest -q
 
-coverage:  ## Run tests and show coverage for configs, training, envs, scripts
+coverage:  ## Run tests and show coverage for configs, training, envs, scripts (fail under 90%)
 	poetry run pytest --cov=configs --cov=training --cov=envs --cov=scripts \
-		--cov-report=term-missing --cov-report=xml:coverage.xml -q
+		--cov-report=term-missing --cov-report=xml:coverage.xml --cov-fail-under=90 -q
+
+coverage-html:  ## Run tests and produce HTML coverage report (htmlcov/) and fail under 90%
+	poetry run pytest --cov=configs --cov=training --cov=envs --cov=scripts \
+		--cov-report=term-missing --cov-report=html:htmlcov --cov-report=xml:coverage.xml --cov-fail-under=90 -q
 
 code-checks:  ## Run all checks via make commands (calls other make targets)
 	$(MAKE) format
