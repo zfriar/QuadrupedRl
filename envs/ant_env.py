@@ -17,7 +17,7 @@ import pybullet_data
 BASE_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "quadruped")
 
 
-class AntEnv(gymnasium.Env):
+class AntEnv:
     """Ant-like Gymnasium environment backed by PyBullet.
 
     The environment provides a small, deterministic simulation that exposes
@@ -51,14 +51,14 @@ class AntEnv(gymnasium.Env):
 
         # Action and observation spaces: defined to match tests' expectations.
         # Action: 8 actuators (Ant-like)
-        self.action_space = gymnasium.spaces.Box(
-            low=-1.0, high=1.0, shape=(8,), dtype=float
+        self.action_space: gymnasium.spaces.Box = gymnasium.spaces.Box(
+            low=-1.0, high=1.0, shape=(8,), dtype=numpy.float64
         )
 
         # Observation: default to 28 values (14 joints * [pos, vel]) but this
         # may be replaced during reset if the URDF has a different joint count.
-        self.observation_space = gymnasium.spaces.Box(
-            low=-float("inf"), high=float("inf"), shape=(28,), dtype=float
+        self.observation_space: gymnasium.spaces.Box = gymnasium.spaces.Box(
+            low=-float("inf"), high=float("inf"), shape=(28,), dtype=numpy.float64
         )
 
         self.time_step = 0.01
@@ -89,7 +89,7 @@ class AntEnv(gymnasium.Env):
         num_joints = pybullet.getNumJoints(self.robot)
         obs_size = num_joints * 2
         self.observation_space = gymnasium.spaces.Box(
-            low=-float("inf"), high=float("inf"), shape=(obs_size,), dtype=float
+            low=-float("inf"), high=float("inf"), shape=(obs_size,), dtype=numpy.float64
         )
 
         self.current_step = 0
