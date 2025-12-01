@@ -137,13 +137,15 @@ class AntEnv:
         The test URDF supplies 14 joints; this helper reads position and
         velocity for the first 14 joints and returns an array of length 28.
         """
-        obs_list: typing.List[float] = []
-        # Collect positions and velocities for 14 joints (tests rely on this)
-        for joint_index in range(14):
-            joint_state = pybullet.getJointState(self.robot, joint_index)
-            obs_list.append(joint_state[0])
-            obs_list.append(joint_state[1])
-        return numpy.array(obs_list, dtype=float)
+        obs = []
+        num_joints = pybullet.getNumJoints(self.robot)
+
+        # Collect positions and velocities for all joints
+        for j in range(num_joints):
+            js = pybullet.getJointState(self.robot, j)
+            obs.append(js[0])
+            obs.append(js[1])
+        return numpy.array(obs, dtype=float)
 
     def _compute_reward(self) -> float:
         """Compute a simple forward-progress reward.
