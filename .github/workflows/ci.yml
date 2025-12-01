@@ -28,15 +28,6 @@ jobs:
       - name: Configure Poetry venv
         run: poetry config virtualenvs.in-project true
 
-      - name: Cache Poetry venv + caches
-        uses: actions/cache@v4
-        with:
-          path: |
-            .venv
-            ~/.cache/pypoetry
-            ~/.cache/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
       - name: Install dependencies (dev)
         run: poetry install --no-interaction --no-ansi
 
@@ -61,15 +52,6 @@ jobs:
       - name: Configure Poetry venv
         run: poetry config virtualenvs.in-project true
 
-      - name: Cache Poetry venv + caches
-        uses: actions/cache@v4
-        with:
-          path: |
-            .venv
-            ~/.cache/pypoetry
-            ~/.cache/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
-
       - name: Install dependencies (dev)
         run: poetry install --no-interaction --no-ansi
 
@@ -93,15 +75,6 @@ jobs:
 
       - name: Configure Poetry venv
         run: poetry config virtualenvs.in-project true
-
-      - name: Cache Poetry venv + caches
-        uses: actions/cache@v4
-        with:
-          path: |
-            .venv
-            ~/.cache/pypoetry
-            ~/.cache/pip
-          key: ${{ runner.os }}-poetry-${{ hashFiles('**/poetry.lock') }}
 
       - name: Install dependencies (dev)
         run: poetry install --no-interaction --no-ansi
