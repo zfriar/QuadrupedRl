@@ -17,7 +17,7 @@ import pybullet_data
 BASE_PATH = os.path.join(os.path.dirname(__file__), "..", "assets", "quadruped")
 
 
-class AntEnv:
+class AntEnv(gymnasium.Env):
     """Ant-like Gymnasium environment backed by PyBullet.
 
     The environment provides a small, deterministic simulation that exposes
@@ -38,8 +38,16 @@ class AntEnv:
     physics_client: typing.Optional[int]
     plane: typing.Optional[int]
     robot: typing.Optional[int]
+    metadata: dict[str, typing.Any] = {
+        "render_modes": ["human", "rgb_array"],
+        "render_fps": 60,
+    }
 
     def __init__(self, gui: bool = False) -> None:
+        """Initialize the Ant environment."""
+        # Initialize the base Gymnasium environment
+        super().__init__()
+
         # Connect to PyBullet (GUI connection excluded from coverage)
         if gui:
             self.physics_client = pybullet.connect(pybullet.GUI)  # pragma: no cover
@@ -72,20 +80,27 @@ class AntEnv:
         # Initialize simulation state
         self.reset()
 
-    def reset(self) -> numpy.ndarray:
-        """Reset the simulation and return the initial observation.
+    def reset(
+        self, *, seed: int | None = None, options: dict[str, typing.Any] | None = None
+    ) -> tuple[numpy.ndarray, dict[str, typing.Any]]:
+        """
+        Reset the simulation and return initial observation and info dict.
+
+        Args:
+            seed (Optional[int]): Random seed for environment (not used).
+            options (Optional[Dict[str, Any]]): Additional options for reset (not used).
 
         Returns:
-            numpy.ndarray: Initial observation (joint positions and velocities).
+            Tuple[numpy.ndarray, Dict[str, Any]]: Initial observation and info dict.
         """
         pybullet.resetSimulation()
         pybullet.setGravity(0, 0, -9.81)
 
-        # Load plane and Ant URDF from the repository assets
+        # Load plane and Ant URDF
         self.plane = pybullet.loadURDF(os.path.join(BASE_PATH, "plane.urdf"))
         self.robot = pybullet.loadURDF(os.path.join(BASE_PATH, "ant.urdf"), [0, 0, 0.5])
 
-        # Adjust observation space to the actual joint count
+        # Adjust observation space
         num_joints = pybullet.getNumJoints(self.robot)
         obs_size = num_joints * 2
         self.observation_space = gymnasium.spaces.Box(
@@ -93,26 +108,27 @@ class AntEnv:
         )
 
         self.current_step = 0
-        return self._get_obs()
+        obs = self._get_obs()
+        info: dict[str, typing.Any] = {}
+        return obs, info
 
     def step(
         self, action: numpy.ndarray
-    ) -> typing.Tuple[numpy.ndarray, float, bool, dict]:
-        """Apply an action and step the simulation.
+    ) -> tuple[numpy.ndarray, float, bool, bool, dict[str, typing.Any]]:
+        """
+        Apply action, step simulation, and return results.
 
         Args:
-            action (numpy.ndarray): Control vector for the 8 actuators.
+            action (numpy.ndarray): Action to apply to the environment.
 
         Returns:
-            tuple: ``(observation, reward, done, info)`` where ``observation`` is
-            a NumPy array, ``reward`` is a float, ``done`` is a bool, and
-            ``info`` is an empty dict for compatibility.
+            Tuple[numpy.ndarray, float, bool, bool, Dict[str, Any]]: Observation,
+                reward, terminated, truncated, and info dict.
         """
         clipped_action = numpy.clip(
             action, self.action_space.low, self.action_space.high
         )
 
-        # Apply the clipped actions to the first 8 joints
         for joint_index in range(8):
             pybullet.setJointMotorControl2(
                 bodyUniqueId=self.robot,
@@ -126,10 +142,10 @@ class AntEnv:
 
         obs = self._get_obs()
         reward = self._compute_reward()
-        done = self._check_done()
-
-        info: dict = {}
-        return obs, reward, done, info
+        terminated = self._check_done()
+        truncated = self.current_step >= self.max_episode_steps
+        info: dict[str, typing.Any] = {}
+        return obs, reward, terminated, truncated, info
 
     def _get_obs(self) -> numpy.ndarray:
         """Return joint positions and velocities as a flat NumPy array.
