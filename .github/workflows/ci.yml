@@ -41,7 +41,7 @@ jobs:
         run: poetry install --no-interaction --no-ansi
 
       - name: Run pre-commit hooks
-        run: poetry run pre-commit run --all-files --no-cache
+        run: poetry run pre-commit run --all-files
 
   code-checks:
     runs-on: ubuntu-latest
