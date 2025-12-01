@@ -1,0 +1,228 @@
+<?xml version="1.0" ?>
+<robot name="ant">
+  <!-- Minimal ant URDF: base_link plus 8 simple revolute joints each with a child link.
+       This file provides joint indices 0..7 so the test environment can query joint states.
+       Visuals and collisions are intentionally minimal. -->
+  <link name="base_link">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="1.0"/>
+      <inertia ixx="0.1" iyy="0.1" izz="0.1"/>
+    </inertial>
+  </link>
+
+  <!-- Create 8 child links and revolute joints attached to the base_link -->
+  <!-- Each joint has limits and an axis so PyBullet reports joint state and allows motor control -->
+  
+  <link name="link0">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint0" type="revolute">
+    <parent link="base_link"/>
+    <child link="link0"/>
+    <origin xyz="0.1 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link1">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <origin xyz="-0.1 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link2">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint2" type="revolute">
+    <parent link="base_link"/>
+    <child link="link2"/>
+    <origin xyz="0 0.1 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link3">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint3" type="revolute">
+    <parent link="base_link"/>
+    <child link="link3"/>
+    <origin xyz="0 -0.1 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link4">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint4" type="revolute">
+    <parent link="base_link"/>
+    <child link="link4"/>
+    <origin xyz="0.1 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link5">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint5" type="revolute">
+    <parent link="base_link"/>
+    <child link="link5"/>
+    <origin xyz="-0.1 0 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link6">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint6" type="revolute">
+    <parent link="base_link"/>
+    <child link="link6"/>
+    <origin xyz="0 0.2 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link7">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint7" type="revolute">
+    <parent link="base_link"/>
+    <child link="link7"/>
+    <origin xyz="0 -0.2 0.1" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <!-- Additional joints to match OpenAI Gym Ant-like structure (total 14 joints) -->
+  <link name="link8">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint8" type="revolute">
+    <parent link="base_link"/>
+    <child link="link8"/>
+    <origin xyz="0.15 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link9">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint9" type="revolute">
+    <parent link="base_link"/>
+    <child link="link9"/>
+    <origin xyz="-0.15 0 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link10">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint10" type="revolute">
+    <parent link="base_link"/>
+    <child link="link10"/>
+    <origin xyz="0 0.25 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link11">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint11" type="revolute">
+    <parent link="base_link"/>
+    <child link="link11"/>
+    <origin xyz="0 -0.25 0" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link12">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint12" type="revolute">
+    <parent link="base_link"/>
+    <child link="link12"/>
+    <origin xyz="0.12 0 0.12" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+  <link name="link13">
+    <inertial>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <mass value="0.1"/>
+      <inertia ixx="0.01" iyy="0.01" izz="0.01"/>
+    </inertial>
+  </link>
+  <joint name="joint13" type="revolute">
+    <parent link="base_link"/>
+    <child link="link13"/>
+    <origin xyz="-0.12 0 0.12" rpy="0 0 0"/>
+    <axis xyz="0 1 0"/>
+    <limit lower="-3.14159" upper="3.14159" effort="10" velocity="10"/>
+  </joint>
+
+</robot>
